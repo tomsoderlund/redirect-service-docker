@@ -2,14 +2,15 @@ const express = require("express");
 
 const app = express();
 const port = process.env.PORT || 3000;
-const redirectUrl = process.env.REDIRECT_URL || "https://www.wonderwalk.app/"; // Fallback URL
+const redirectBase = process.env.REDIRECT_URL || "https://www.wonderwalk.app";
 
 app.get("*", (req, res) => {
-  res.redirect(301, redirectUrl);
+  const fullRedirectUrl = `${redirectBase}${req.originalUrl}`;
+  res.redirect(301, fullRedirectUrl);
 });
 
 app.listen(port, () => {
-  console.log(`Redirecting to ${redirectUrl}`);
+  console.log(`Redirecting all requests to ${redirectBase}`);
 });
 
 module.exports = app;
